@@ -17,8 +17,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val apiManager = (application as CoolHttpApp).apiManager
+
         btnFetchJson.setOnClickListener {
             fetchDataWithGson()
+            apiManager.getListOfEmail ({ allEmails ->
+                val listOfEmails = allEmails.emails
+
+                listOfEmails.forEach {
+                    Log.i(TAG, it.toString())
+                }
+
+            },
+                {
+                    Toast.makeText(this, "errror ", Toast.LENGTH_SHORT).show()
+                })
         }
 
     }
